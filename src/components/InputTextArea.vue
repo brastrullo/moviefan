@@ -1,6 +1,7 @@
 <template>
   <label :for="name">{{ label }}</label>
-  <textarea :name="name" :id="name" />
+  <textarea :name="name" :id="name" @input="updateValue" />
+  <p>My {{ label }} is {{ value }}</p>
 </template>
 
 <script lang="ts">
@@ -10,7 +11,9 @@ export default defineComponent({
   name: "InputTextArea",
   props: {
     name: String,
-    label: String
+    label: String,
+    value: String,
+    updateValue: Function
   }
 });
 </script>

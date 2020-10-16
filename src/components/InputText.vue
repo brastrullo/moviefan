@@ -1,6 +1,7 @@
 <template>
-  <label :for="name">{{ label }}</label>
-  <input type="text" :name="name" :id="name" />
+  <label :for="name">{{ label }}:</label>
+  <input type="text" :name="name" :id="name" @input="updateValue" />
+  <p>My {{ label }} is {{ value }}</p>
 </template>
 
 <script lang="ts">
@@ -10,7 +11,9 @@ export default defineComponent({
   name: "InputText",
   props: {
     name: String,
-    label: String
+    label: String,
+    value: String,
+    updateValue: Function
   }
 });
 </script>
