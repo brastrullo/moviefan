@@ -11,14 +11,20 @@
       label="Last Name"
       :value="lastname"
       :updateValue="updateLastName"
+      v-if="firstname"
     />
     <input-text-area
       name="shortbio"
       label="Short Bio"
       :value="shortbio"
       :updateValue="updateShortBio"
+      v-if="lastname"
     />
-    <movies name="searchmovie" label="Add Favourite Movies (3 - 15)" />
+    <movies
+      v-if="shortbio"
+      name="searchmovie"
+      label="Add Favourite Movies (3 - 15)"
+    />
   </div>
   <footer>
     <span class="tmdb-icon">+</span>
@@ -32,6 +38,8 @@ import { defineComponent } from "vue";
 import InputText from "@/components/InputText.vue";
 import InputTextArea from "@/components/InputTextArea.vue";
 import Movies from "@/components/Movies.vue";
+import debounce from "lodash.debounce";
+import throttle from "lodash.throttle";
 
 export default defineComponent({
   name: "Home",
@@ -43,18 +51,18 @@ export default defineComponent({
     };
   },
   methods: {
-    updateFirstName(e: Event) {
+    updateFirstName: debounce(function(this: any, e: Event) {
       const target = e.target as HTMLInputElement;
       this.firstname = target.value;
-    },
-    updateLastName(e: Event) {
+    }, 500),
+    updateLastName: debounce(function(this: any, e: Event) {
       const target = e.target as HTMLInputElement;
       this.lastname = target.value;
-    },
-    updateShortBio(e: Event) {
-      const target = e.target as HTMLTextAreaElement;
+    }, 500),
+    updateShortBio: throttle(function(this: any, e: Event) {
+      const target = e.target as HTMLInputElement;
       this.shortbio = target.value;
-    }
+    }, 200)
   },
   components: {
     InputText,

@@ -1,7 +1,6 @@
 <template>
   <label :for="name">{{ label }}:</label>
   <input type="text" :name="name" :id="name" @input="updateValue" />
-  <p>My {{ label }} is {{ value }}</p>
 </template>
 
 <script lang="ts">
