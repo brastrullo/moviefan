@@ -1,12 +1,14 @@
 <template>
   <div class="home">
     <input-text
+      ref="firstname"
       name="firstname"
       label="First Name"
       :value="firstname"
       :updateValue="updateFirstName"
     />
     <input-text
+      ref="lastname"
       name="lastname"
       label="Last Name"
       :value="lastname"
@@ -14,6 +16,7 @@
       v-if="firstname"
     />
     <input-text-area
+      ref="shortbio"
       name="shortbio"
       label="Short Bio"
       :value="shortbio"
@@ -34,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, nextTick } from "vue";
 import InputText from "@/components/InputText.vue";
 import InputTextArea from "@/components/InputTextArea.vue";
 import Movies from "@/components/Movies.vue";
@@ -47,18 +50,31 @@ export default defineComponent({
     return {
       firstname: "",
       lastname: "",
-      shortbio: ""
+      shortbio: "",
+      firstnameInput: this.$refs.firstname,
+      lastnameInput: this.$refs.lastname,
+      shortbioInput: this.$refs.shortbio
     };
   },
+  mounted() {
+    this.$nextTick(() => {
+      if (this.lastnameInput) {
+        this.focusOnLastnameInput();
+      }
+    });
+  },
   methods: {
-    updateFirstName: debounce(function(this: any, e: Event) {
+    focusOnLastnameInput() {
+      this.$el.lastnameInput.focus();
+    },
+    updateFirstName: debounce(async function(this: any, e: Event) {
       const target = e.target as HTMLInputElement;
       this.firstname = target.value;
-    }, 500),
+    }, 300),
     updateLastName: debounce(function(this: any, e: Event) {
       const target = e.target as HTMLInputElement;
       this.lastname = target.value;
-    }, 500),
+    }, 300),
     updateShortBio: throttle(function(this: any, e: Event) {
       const target = e.target as HTMLInputElement;
       this.shortbio = target.value;
