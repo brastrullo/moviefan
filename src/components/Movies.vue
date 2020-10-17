@@ -3,7 +3,9 @@
   <input v-model="query" type="text" :name="name" :id="name" />
   <p>{{ query }}</p>
   <button @click="searchMovie">Search</button>
-  <p v-for="movies in moviesSelected" :key="movies.id">{{ movies. title}}</p>
+  <ul>
+    <li v-for="movies in moviesSelected" :key="movies.id">{{ movies. title}}</li>
+  </ul>
   <ul>
     <li
       v-for="movie in moviesFound"
@@ -59,7 +61,12 @@ export default defineComponent({
   methods: {
     selectMovie(movie) {
       console.log(this.moviesSelected);
-      this.moviesSelected = [...this.moviesSelected, movie];
+      const isSelectedMovie = this.moviesSelected.find(obj => obj.id === movie.id);
+      if (!isSelectedMovie) {
+        this.moviesSelected = [...this.moviesSelected, movie];
+      } else {
+        this.moviesSelected = this.moviesSelected.filter(obj => obj.id !== movie.id)
+      }
       console.log("movie:", movie, movie.title);
     },
     async searchMovie() {
