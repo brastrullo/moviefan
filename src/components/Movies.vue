@@ -3,7 +3,15 @@
   <input v-model="query" type="text" :name="name" :id="name" />
   <p>{{ query }}</p>
   <button @click="searchMovie">Search</button>
-
+  
+  <ul>
+    <li v-for="movie in moviesFound" :key="movie.id">
+      <article>
+        {{ movie }}
+      </article>
+      <button>x</button>
+    </li>
+  </ul>
   <ul>
     <li v-for="movie in moviesSelected" :key="movie.id">
       <article>
@@ -39,7 +47,16 @@ export default defineComponent({
       const FETCH_URL = `${BASE_URL}?api_key=${API_KEY}&query=${encodeURIComponent(query)}&page=1`;
       let res = await fetch(FETCH_URL);
       let data = await res.json();
-      console.log(data)
+      let movies = data.results.map(obj => ({
+        id: obj.id,
+        title: obj.title,
+        overview: obj.overview,
+        release_date: obj.release_date,
+        user_score: obj.vote_average,
+        poster: obj.poster_path
+      }))
+      this.moviesFound = movies;
+      console.log(movies)
     },
   },
 });
