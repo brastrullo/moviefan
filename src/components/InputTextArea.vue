@@ -1,7 +1,7 @@
 <template>
-  <label :for="name">{{ label }}</label>
+  <label :for="name">{{ label }}:</label>
   <textarea :name="name" :id="name" @input="updateValue" />
-  <p>My {{ label }} word count is {{ value.length }}</p>
+  <span v-if="value.length > 0">(character count: {{ value.length }})</span>
 </template>
 
 <script lang="ts">
@@ -13,8 +13,8 @@ export default defineComponent({
     name: String,
     label: String,
     value: String,
-    updateValue: Function
-  }
+    updateValue: Function,
+  },
 });
 </script>
 

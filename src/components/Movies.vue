@@ -1,11 +1,13 @@
 <template>
+  <h2>Favourite Movies</h2>
+  <ul>
+    <li v-for="movies in moviesSelected" :key="movies.id">
+      {{ movies.title }}
+    </li>
+  </ul>
   <label :for="name">{{ label }}</label>
   <input v-model="query" type="text" :name="name" :id="name" />
-  <p>{{ query }}</p>
   <button @click="searchMovie">Search</button>
-  <ul>
-    <li v-for="movies in moviesSelected" :key="movies.id">{{ movies. title}}</li>
-  </ul>
   <ul>
     <li
       v-for="movie in moviesFound"
@@ -32,14 +34,6 @@
       <button>x</button>
     </li>
   </ul>
-  <ul>
-    <li v-for="movie in moviesSelected" :key="movie.id">
-      <article>
-        {{ movie }}
-      </article>
-      <button>x</button>
-    </li>
-  </ul>
 </template>
 
 <script lang="ts">
@@ -51,7 +45,7 @@ export default defineComponent({
     return {
       query: "",
       moviesFound: [],
-      moviesSelected: [{id: 'asdf', title: 'asdf'}],
+      moviesSelected: [],
     };
   },
   props: {
@@ -61,13 +55,19 @@ export default defineComponent({
   methods: {
     selectMovie(movie) {
       console.log(this.moviesSelected);
-      const isSelectedMovie = this.moviesSelected.find(obj => obj.id === movie.id);
+      const isSelectedMovie = this.moviesSelected.find(
+        (obj) => obj.id === movie.id
+      );
       if (!isSelectedMovie) {
         this.moviesSelected = [...this.moviesSelected, movie];
       } else {
-        this.moviesSelected = this.moviesSelected.filter(obj => obj.id !== movie.id)
+        this.moviesSelected = this.moviesSelected.filter(
+          (obj) => obj.id !== movie.id
+        );
       }
       console.log("movie:", movie, movie.title);
+      this.query = "";
+      this.moviesFound = [];
     },
     async searchMovie() {
       const query = this.query;
