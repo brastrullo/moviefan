@@ -1,5 +1,5 @@
 <template>
-  <h1>FlickFan&#128076;</h1>
+  <h1>Movies Fan Page</h1>
   <Home />
 </template>
 
