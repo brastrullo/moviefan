@@ -10,8 +10,8 @@
     >counter: {{ moviesSelected.length }}</span
   >
   <ul>
-    <li v-for="movies in moviesSelected" :key="movies.id">
-      {{ movies.title }}
+    <li v-for="movie in moviesSelected" :key="movie.id" @click="toggleMovie(movie)">
+      {{ movie.title }}
     </li>
   </ul>
   <label v-if="moviesSelected.length < 15" :for="name">{{ label }}</label>
@@ -29,7 +29,7 @@
     <li
       v-for="movie in moviesFound"
       :key="movie.id"
-      @click="selectMovie(movie)"
+      @click="toggleMovie(movie)"
       :class="[
         'movie-card',
         moviesSelected.find((obj) => obj.id === movie.id) === undefined
@@ -71,7 +71,7 @@ export default defineComponent({
     label: String,
   },
   methods: {
-    selectMovie(movie) {
+    toggleMovie(movie) {
       console.log(this.moviesSelected);
       const isSelectedMovie = this.moviesSelected.find(
         (obj) => obj.id === movie.id
