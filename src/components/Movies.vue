@@ -3,14 +3,17 @@
   <p v-if="moviesSelected.length < 3 || moviesSelected.length >= 14">
     Choose between 3 to 15 movies
   </p>
-  <p v-if="moviesSelected.length === 15">
-    Max movies selected
-  </p>
+  <p v-if="moviesSelected.length === 15">Max movies selected</p>
   <span v-if="moviesSelected.length > 0"
     >counter: {{ moviesSelected.length }}</span
   >
   <ul>
-    <li v-for="movie in moviesSelected" :key="movie.id" @click="toggleMovie(movie)">
+    <li
+      class="favourite-movie"
+      v-for="movie in moviesSelected"
+      :key="movie.id"
+      @click="toggleMovie(movie)"
+    >
       {{ movie.title }}
     </li>
   </ul>
@@ -48,7 +51,6 @@
           {{ movie.user_score }}
         </p>
       </article>
-      <button>x</button>
     </li>
   </ul>
 </template>
@@ -139,8 +141,20 @@ input {
 button {
   margin: 0.5em 0;
 }
+article,
+.favourite-movie,
+.favourite-movie button {
+  cursor: pointer;
+}
 
+article:hover,
+.favourite-movie:hover {
+  background: rgb(246, 246, 246);
+}
 .movie-card.selected {
-  background: green;
+  background: rgb(206, 206, 206);
+  &:hover {
+    border: 1px solid black;
+  }
 }
 </style>
