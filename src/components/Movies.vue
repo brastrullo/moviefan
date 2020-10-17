@@ -6,9 +6,16 @@
     </li>
   </ul>
   <label :for="name">{{ label }}</label>
-  <input v-model="query" type="text" :name="name" :id="name" @keydown.enter="searchMovie"/>
+  <input
+    v-model="query"
+    type="text"
+    :name="name"
+    :id="name"
+    @keydown.enter="searchMovie"
+  />
   <button @click="searchMovie">Search</button>
-  <ul>
+  <p v-if="moviesFound.length === 0 && errorMsg.length > 0">{{ errorMsg }}</p>
+  <ul v-else>
     <li
       v-for="movie in moviesFound"
       :key="movie.id"
@@ -44,6 +51,7 @@ export default defineComponent({
   data() {
     return {
       query: "",
+      errorMsg: "",
       moviesFound: [],
       moviesSelected: [],
     };
@@ -98,7 +106,11 @@ export default defineComponent({
         user_score: obj.vote_average,
         poster: `${IMG_URL}${obj.poster_path}`,
       }));
-      this.moviesFound = movies;
+      if (movies.length === 0) {
+        this.errorMsg = "Movie not found";
+      } else {
+        this.moviesFound = movies;
+      }
     },
   },
 });
