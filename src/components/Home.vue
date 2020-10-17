@@ -37,23 +37,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick } from "vue";
-import InputText from "@/components/InputText.vue";
-import InputTextArea from "@/components/InputTextArea.vue";
-import Movies from "@/components/Movies.vue";
-import debounce from "lodash.debounce";
-import throttle from "lodash.throttle";
+import { defineComponent } from 'vue';
+import InputText from '@/components/InputText.vue';
+import InputTextArea from '@/components/InputTextArea.vue';
+import Movies from '@/components/Movies.vue';
+import debounce from 'lodash.debounce';
+import throttle from 'lodash.throttle';
 
 export default defineComponent({
-  name: "Home",
+  name: 'Home',
   data() {
     return {
-      firstname: "",
-      lastname: "",
-      shortbio: "",
+      firstname: '',
+      lastname: '',
+      shortbio: '',
       firstnameInput: this.$refs.firstname,
       lastnameInput: this.$refs.lastname,
-      shortbioInput: this.$refs.shortbio
+      shortbioInput: this.$refs.shortbio,
     };
   },
   mounted() {
@@ -67,24 +67,24 @@ export default defineComponent({
     focusOnLastnameInput() {
       this.$el.lastnameInput.focus();
     },
-    updateFirstName: debounce(async function(this: any, e: Event) {
-      const target = e.target as HTMLInputElement;
+    updateFirstName: debounce(function(e) {
+      const target = e.target;
       this.firstname = target.value;
     }, 300),
-    updateLastName: debounce(function(this: any, e: Event) {
-      const target = e.target as HTMLInputElement;
+    updateLastName: debounce(function(e) {
+      const target = e.target;
       this.lastname = target.value;
     }, 300),
-    updateShortBio: throttle(function(this: any, e: Event) {
-      const target = e.target as HTMLInputElement;
+    updateShortBio: throttle(function(e) {
+      const target = e.target;
       this.shortbio = target.value;
-    }, 200)
+    }, 200),
   },
   components: {
     InputText,
     InputTextArea,
-    Movies
-  }
+    Movies,
+  },
 });
 </script>
 
