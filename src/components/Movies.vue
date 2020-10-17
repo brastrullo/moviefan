@@ -1,19 +1,29 @@
 <template>
   <h2>Favourite Movies</h2>
+  <p v-if="moviesSelected.length < 3 || moviesSelected.length >= 14">
+    Choose between 3 to 15 movies
+  </p>
+  <p v-if="moviesSelected.length === 15">
+    Max movies selected
+  </p>
+  <span v-if="moviesSelected.length > 0"
+    >counter: {{ moviesSelected.length }}</span
+  >
   <ul>
     <li v-for="movies in moviesSelected" :key="movies.id">
       {{ movies.title }}
     </li>
   </ul>
-  <label :for="name">{{ label }}</label>
+  <label v-if="moviesSelected.length < 15" :for="name">{{ label }}</label>
   <input
+    v-if="moviesSelected.length < 15"
     v-model="query"
     type="text"
     :name="name"
     :id="name"
     @keydown.enter="searchMovie"
   />
-  <button @click="searchMovie">Search</button>
+  <button v-if="moviesSelected < 15" @click="searchMovie">Search</button>
   <p v-if="moviesFound.length === 0 && errorMsg.length > 0">{{ errorMsg }}</p>
   <ul v-else>
     <li
