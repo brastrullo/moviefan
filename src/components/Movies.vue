@@ -3,9 +3,19 @@
   <input v-model="query" type="text" :name="name" :id="name" />
   <p>{{ query }}</p>
   <button @click="searchMovie">Search</button>
-
+  <p v-for="movies in moviesSelected" :key="movies.id">{{ movies. title}}</p>
   <ul>
-    <li v-for="movie in moviesFound" :key="movie.id">
+    <li
+      v-for="movie in moviesFound"
+      :key="movie.id"
+      @click="selectMovie(movie)"
+      :class="[
+        'movie-card',
+        moviesSelected.find((obj) => obj.id === movie.id) === undefined
+          ? ''
+          : 'selected',
+      ]"
+    >
       <article>
         <p class="title">{{ movie.title }}</p>
         <img class="poster" :src="movie.poster" :alt="movie.title" />
@@ -39,7 +49,7 @@ export default defineComponent({
     return {
       query: "",
       moviesFound: [],
-      moviesSelected: [{ id: 0, name: "movie1" }],
+      moviesSelected: [{id: 'asdf', title: 'asdf'}],
     };
   },
   props: {
@@ -47,6 +57,11 @@ export default defineComponent({
     label: String,
   },
   methods: {
+    selectMovie(movie) {
+      console.log(this.moviesSelected);
+      this.moviesSelected = [...this.moviesSelected, movie];
+      console.log("movie:", movie, movie.title);
+    },
     async searchMovie() {
       const query = this.query;
       console.log(query);
@@ -77,7 +92,6 @@ export default defineComponent({
         poster: `${IMG_URL}${obj.poster_path}`,
       }));
       this.moviesFound = movies;
-      console.log(movies);
     },
   },
 });
@@ -95,5 +109,9 @@ input {
 }
 button {
   margin: 0.5em 0;
+}
+
+.movie-card.selected {
+  background: green;
 }
 </style>
