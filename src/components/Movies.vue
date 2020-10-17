@@ -7,11 +7,15 @@
   <ul>
     <li v-for="movie in moviesFound" :key="movie.id">
       <article>
-        <p>{{ movie.title }}</p>
-        <img :src="movie.poster" :alt="movie.title" />
-        <p>{{ movie.overview }}</p>
-        <p>{{ movie.release_date }}</p>
-        <p>{{ movie.user_score }}</p>
+        <p class="title">{{ movie.title }}</p>
+        <img class="poster" :src="movie.poster" :alt="movie.title" />
+        <p class="overview">{{ movie.overview }}</p>
+        <p class="release_date">{{ movie.release_date }}</p>
+        <p
+          :style="movie.user_score > 8 ? { color: 'green' } : { color: 'red' }"
+        >
+          {{ movie.user_score }}
+        </p>
       </article>
       <button>x</button>
     </li>
