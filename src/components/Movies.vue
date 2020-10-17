@@ -6,7 +6,7 @@
     </li>
   </ul>
   <label :for="name">{{ label }}</label>
-  <input v-model="query" type="text" :name="name" :id="name" />
+  <input v-model="query" type="text" :name="name" :id="name" @keydown.enter="searchMovie"/>
   <button @click="searchMovie">Search</button>
   <ul>
     <li
