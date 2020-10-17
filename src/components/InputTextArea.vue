@@ -1,7 +1,7 @@
 <template>
   <label :for="name">{{ label }}</label>
   <textarea :name="name" :id="name" @input="updateValue" />
-  <p>My {{ label }} is {{ value }}</p>
+  <p>My {{ label }} word count is {{ value.length }}</p>
 </template>
 
 <script lang="ts">
